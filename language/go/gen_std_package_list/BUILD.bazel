@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 go_binary(
     name = "gen_std_package_list",
     embed = [":go_default_library"],
-    visibility = ["//language/go:__subpackages__"],
+    visibility = ["//visibility:public"],
 )
 
 go_library(
