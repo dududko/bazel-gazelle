@@ -142,7 +142,7 @@ func (ucr *updateConfigurer) CheckFlags(fs *flag.FlagSet, c *config.Config) erro
 	}
 	for _, imp := range ucr.knownImports {
 		uc.repos = append(uc.repos, repo.Repo{
-			Name:     label.ImportPathToBazelRepoName(imp),
+			Name:     "plato_go_" + label.ImportPathToBazelRepoName(imp),
 			GoPrefix: imp,
 		})
 	}
