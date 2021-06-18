@@ -26,6 +26,7 @@ limitations under the License.
 package rule
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -406,6 +407,12 @@ func (f *File) SortMacro() {
 func (f *File) Save(path string) error {
 	f.Sync()
 	f.Content = bzl.Format(f.File)
+	// do not update the file if content did not change
+	if _, err := os.Stat(path); !os.IsNotExist(err) {
+		if oldContent, err := ioutil.ReadFile(path); err == nil && bytes.Compare(oldContent, f.Content) == 0 {
+			return nil
+		}
+	}
 	return ioutil.WriteFile(path, f.Content, 0666)
 }
 
